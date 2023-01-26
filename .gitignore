@@ -1,0 +1,7 @@
+*.sqlite3
+.idea
+__pycache__
+*.pyc
+data
+.env.prod
+.env.prod.db
