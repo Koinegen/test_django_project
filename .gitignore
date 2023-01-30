@@ -7,4 +7,5 @@ data
 .env.prod.db
 nginx.conf
 venv
+debug
 sent_emails
