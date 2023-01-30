@@ -1,47 +1,48 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
 
-{% block title %}Login{% endblock %}
-
+{% block title %}Sign in{% endblock %}
 {% block content %}
-<div class="column is-4 is-offset-4">
-    <h3 class="title">Login</h3>
-    <div class="box">
-{#        {% with messages = get_flashed_messages() %}#}
-{#        {% if messages %}#}
-{#            <div class="notification is-danger">#}
-{#            {{ messages[0] }}#}
-{#            </div>#}
-{#        {% endif %}#}
-{#        {% endwith %}#}
-        {% if messages %}
-        {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
 
+    <main class="form-signin w-100 m-auto">
+    <div class="box">
+        {% if messages %}
+            <div class="notification is-danger">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+            </div>
+        {% endif %}
         <form method="post">
             {% csrf_token %}
+            <img class="mb-4" src="{% static 'i/django_logo.png' %}" alt="" width="72" height="57">
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-{#            {{ form.as_p }}#}
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="text" name="username" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username" placeholder="Your Email" autofocus="">
-                </div>
+
+            <div class="form-floating">
+                <input type="text" name="username" class="form-control" required id="floatingInput"
+                       placeholder="Username">
+                <label for="floatingInput">Username</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" name="password" class="form-control" required id="floatingPassword"
+                       autocomplete="current-password" placeholder="Password">
+                <label for="floatingPassword">Password</label>
             </div>
 
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="password" name="password" autocomplete="current-password" required="" id="id_password" placeholder="Your Password">
-                </div>
-            </div>
-            <div class="field">
-                <label class="checkbox">
-                    <input type="checkbox">
-                    Remember me
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
                 </label>
             </div>
-            <button class="button is-block is-info is-large is-fullwidth">Login</button>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
         </form>
     </div>
-</div>
+    </main>
+
+
 {% endblock %}

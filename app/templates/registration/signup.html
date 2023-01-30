@@ -1,13 +1,100 @@
-<!-- templates/registration/signup.html -->
-{% extends "base.html" %}
-
-{% block title %}Sign Up{% endblock %}
-
-{% block content %}
-  <h2>Sign up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign Up</button>
-  </form>
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
 {% endblock %}
+
+{% block title %}Sign up{% endblock %}
+{% block content %}
+    <main class="form-signin w-100 m-auto">
+        {% if messages %}
+            <div class="notification is-danger">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <img class="mb-4" src="{% static 'i/django_logo.png' %}" alt="" width="72" height="57">
+            <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+            <div class="form-floating">
+                <input type="text" maxlength="150" autofocus name="username" class="form-control" required
+                       id="id_username"
+                       placeholder="Username">
+                <label for="id_username">Username</label>
+{#                <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>#}
+            </div>
+
+            <div class="form-floating">
+                <input type="email" name="email" maxlength="254" required class="form-control" id="id_email"
+                       placeholder="name@example.com">
+                <label for="id_email">Email</label>
+{#                <span class="helptext">Required. Inform a valid email address.</span>#}
+            </div>
+
+            <div class="form-floating">
+                <input type="password" name="password1" class="form-control" required id="id_password1"
+                       autocomplete="new-password" placeholder="Password">
+                <label for="id_password1">Password</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="password" name="password2" class="form-control" required id="id_password2"
+                       autocomplete="new-password" placeholder="Retype password">
+                <label for="id_password2">Retype password</label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+        </form>
+    </main>
+
+
+{#            <h2>Sign up</h2>#}
+{#            <form method="post">#}
+{#                {% csrf_token %}#}
+{#                {{ form.as_p }}#}
+{#                <button type="submit">Sign Up</button>#}
+{#            </form>#}
+{% endblock %}
+
+
+{#    <main class="form-signin w-100 m-auto">#}
+{#        #}
+{#  <h2>Sign up</h2>#}
+{#  <form method="post">#}
+{#    <input type="hidden" name="csrfmiddlewaretoken" value="K3l8DVrMn2Ogi62xJbUEo42MVdCd0PcM5QI7u3Pi7VzvKrP0zQO3U1qxrukVL2qv">#}
+{#    <p>#}
+{#    <label for="id_username">Username:</label>#}
+{#    <input type="text" name="username" maxlength="150" autofocus required id="id_username">#}
+{#    #}
+{#      <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>#}
+{#    #}
+{#    #}
+{#  </p>#}
+{##}
+{#  #}
+{#  <p>#}
+{#    <label for="id_email">Email:</label>#}
+{#    <input type="email" name="email" maxlength="254" required id="id_email">#}
+{#    #}
+{#      <span class="helptext">Required. Inform a valid email address.</span>#}
+{#    #}
+{#    #}
+{#  </p>#}
+{##}
+{#  #}
+{#  <p>#}
+{#    <label for="id_password1">Password:</label>#}
+{#    <input type="password" name="password1" autocomplete="new-password" required id="id_password1">#}
+{#    #}
+{#    #}
+{#  </p>#}
+{##}
+{#  #}
+{#  <p>#}
+{#    <label for="id_password2">Password confirmation:</label>#}
+{#    <input type="password" name="password2" autocomplete="new-password" required id="id_password2">#}
+{#    #}
+{#      <span class="helptext">Enter the same password as before, for verification.</span>#}
+{#    #}

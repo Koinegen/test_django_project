@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'test_styles',
-    'accounts'
+    'accounts',
+    'crispy_forms'
 ]
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "login"
 
@@ -146,7 +147,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-# STATICFILES_DIRS = ["/home/app/web/static", BASE_DIR / "static" ]
+STATICFILES_DIRS = ["/usr/src/app/static", BASE_DIR / "static" ]
 # STATIC_ROOT = BASE_DIR / "static"
 
 # Default primary key field type
