@@ -5,3 +5,6 @@ __pycache__
 data
 .env.prod
 .env.prod.db
+nginx.conf
+venv
+sent_emails
