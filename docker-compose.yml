@@ -13,12 +13,33 @@ services:
       - ./.env.dev
   db:
     image: postgres:13.0-alpine
+    # debug ports
+    ports:
+      - "5432:5432"
+    #
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+  redis:
+    image: redis:alpine
+    # debug ports
+    ports:
+      - "6379:6379"
+    #
+  celery:
+    build: ./app
+    command: celery -A test_django_project worker -l info
+    volumes:
+      - ./app/:/usr/src/app/
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+      - redis
+      - web
 
 volumes:
   postgres_data:

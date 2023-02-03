@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'test_styles',
     'accounts',
-    'crispy_forms'
+    'video_converter',
+    'celery',
 ]
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "login"
 
@@ -112,6 +112,9 @@ LOGGING = {
         },
     },
 }
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -149,6 +152,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = ["/usr/src/app/static", BASE_DIR / "static" ]
 # STATIC_ROOT = BASE_DIR / "static"
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
