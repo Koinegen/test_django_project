@@ -3,7 +3,7 @@ FROM python:3
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 RUN apt update \
-    && apt install gcc python3-dev musl-dev -y
+    && apt install gcc python3-dev musl-dev ffmpeg -y
 
 WORKDIR /usr/src/app
 RUN pip install --upgrade pip

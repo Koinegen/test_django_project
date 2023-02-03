@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <main class="file-upload w-50 m-auto">
+        {% if task_id %}
+            <input type="hidden" id="task_id" value="{{ task_id }}">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: 0%"
+                     aria-valuenow="50" aria-valuemin="0"
+                     aria-valuemax="100" id="id_progress"></div>
+            </div>
+            <p><a href="{% url 'home' %}">Return to home</a></p>
+
+            </main>
+            <script type="text/javascript" src="{% static 'js/getStatus.js' %}"></script>
+            <script type="text/javascript" src="{% static 'js/onStatus.js' %}"></script>
+        {% else %}
+
+
+            <form id="file-form" method="post" action="{% url 'converter' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-floating">
+                    <div class="mb-3">
+                        <label for="id_file" class="form-label">Default file input example</label>
+                        <input class="form-control w-40" type="file" id="id_file">
+                    </div>
+                    <select class="form-select w-30" aria-label="Default select example" id="id_select">
+                        <option selected>Open this select menu</option>
+                        <option value="mov">mov</option>
+                        <option value="mp3">mp3</option>
+                        <option value="gif">gif</option>
+                    </select>
+                    <button class="w-30 btn btn-lg btn-primary" type="submit">Upload</button>
+                </div>
+
+
+            </form>
+            <p id="status"></p>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: 0%"
+                     aria-valuenow="50" aria-valuemin="0"
+                     aria-valuemax="100" id="id_progress"></div>
+            </div>
+
+            <p><a href="{% url 'home' %}">Return to home</a></p>
+
+            </main>
+            <script type="text/javascript" src="{% static 'js/getStatus.js' %}"></script>
+            <script type="text/javascript" src="{% static 'js/fileUpload.js' %}"></script>
+        {% endif %}
+
+{% endblock %}
