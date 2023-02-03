@@ -15,30 +15,6 @@ function getCookie(name) {
 }
 const csrftoken = getCookie('csrftoken');
 
-function getStatus() {
-    var status = 1;
-    var status_bar = document.getElementById('id_progress');
-    const i = setInterval(function (){
-        if (status === 100) {
-            clearInterval(i);
-        }
-
-        $.ajax({
-            url: '/converter/uploads/status/',
-            type: "GET",
-            dataType: 'json',
-            xhrFields: {
-                withCredentials: true
-            },
-            success: function (result) {
-                console.log(result.status);
-                status = result.status;
-                status_bar.ariaValueNow = status;
-                status_bar.style.width = status + '%';
-            }
-        });
-    }, 500)
-}
 
 (function(){
     var form = document.getElementById('file-form');
@@ -82,13 +58,16 @@ function getStatus() {
         // Open the connection.
         xhr.open('POST', '/converter/uploads/form/', true);
         xhr.setRequestHeader("X-CSRFToken", csrftoken)
+        xhr.responseType = 'json';
 
 
         // Set up a handler for when the task for the request is complete.
         xhr.onload = function () {
           if (xhr.status === 200) {
             statusDiv.innerHTML = 'Your upload is successful..';
-            getStatus();
+            window.history.replaceState({}, '', '/converter/uploads/' + xhr.response.task_id);
+            console.log(xhr.response.task_id)
+            getStatus(xhr.response.task_id);
           } else {
             statusDiv.innerHTML = 'An error occurred during the upload. Try again.';
           }
