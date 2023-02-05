@@ -7,6 +7,9 @@
 
 
 {% block content %}
+    <div class="frame">
+    <div class="bg bg-1"></div>
+  <div class="bg bg-2"></div>
     <main class="file-upload h-100 w-70 m-auto">
 
         <div class="form-floating d-flex flex-column min-vh-100 justify-content-center align-items-center">
@@ -55,7 +58,7 @@
         </div>
     <p><a href="{% url 'home' %}">Return to home</a></p>
     </main>
-
+    </div>
     {% if task_id %}
         <script type="text/javascript" src="{% static 'js/getStatus.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/onStatus.js' %}"></script>
