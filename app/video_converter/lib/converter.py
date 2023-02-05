@@ -1,6 +1,7 @@
 import subprocess
 import re
 from ..models import Video
+from .exceptions import ConverterError
 from django.conf import settings
 import os
 from celery import shared_task
@@ -33,6 +34,9 @@ def _convert(file_in, file_out):
             continue
         _str = proc.stdout.readline().decode('utf-8')
         if _str == "" and proc.poll() is not None:
+            if proc.returncode != 0:
+                raise ConverterError(f'Return code:{proc.returncode}\n'
+                                     f'stderr: {proc.stderr.read()}')
             break
         if _str:
             total_dur_match = DUR_REGEX.search(_str)
@@ -41,23 +45,26 @@ def _convert(file_in, file_out):
             if total_dur:
                 progress_time = TIME_REGEX.search(_str)
                 if progress_time:
-
-
                     elapsed_time = to_ms(**progress_time.groupdict())
                     yield (int(elapsed_time / total_dur * 100))
 
 
 @shared_task()
-def convert(job_id): #db_object: Video):
+def convert(job_id):
     db_object = Video.objects.filter(job_id=job_id).first()
     _in = os.path.join(settings.MEDIA_ROOT, db_object.video.path)
     _out = os.path.join(settings.MEDIA_ROOT, db_object.output_name)
-    print(_in)
-    print(_out)
-    for i in _convert(_in, _out):
-        db_object.status = i
-        db_object.save(update_fields=['status'])
-
+    db_object.complete = 0
+    db_object.save(update_fields=['complete'])
+    try:
+        for i in _convert(_in, _out):
+            db_object.status = i
+            db_object.save(update_fields=['status'])
+    except ConverterError:
+        db_object.complete = 2
+        db_object.status = 0
+        db_object.save(update_fields=['status', 'complete'])
+        return
     db_object.complete = 1
     db_object.status = 100
     db_object.save(update_fields=['status', 'complete'])

@@ -1,0 +1,1 @@
+class ConverterError(Exception): pass
