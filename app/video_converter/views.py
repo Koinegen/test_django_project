@@ -20,7 +20,7 @@ def page(request, task_id=None):
     context = {}
     if task_id:
         context = {"task_id": task_id}
-    return render(request, 'video_converter/converter.html', context)
+    return render(request, 'converter.html', context)
 
 
 @require_http_methods(["GET"])

@@ -44,7 +44,7 @@ const csrftoken = getCookie('csrftoken');
         }
 
         if (file.size >= 20000000000 ) {
-            statusDiv.innerHTML = 'You cannot upload this file because its size exceeds the maximum limit of 2 MB.';
+            statusDiv.innerHTML = 'You cannot upload this file because its size exceeds the maximum limit of 200 MB.';
             return;
         }
 
