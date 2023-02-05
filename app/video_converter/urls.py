@@ -3,7 +3,8 @@ from . import views
 
 urlpatterns = [
     path('uploads/form/', views.model_form_upload, name="converter"),
-    path('uploads/', views.page),
+    path('uploads/', views.page, name="upload_home"),
+    re_path(r'download/(?P<task_id>[0-9A-Za-z]{32})/', views.download),
     re_path(r'uploads/(?P<task_id>[0-9A-Za-z]{32}/)', views.page, name="converter_page"),
     re_path(r'uploads/status/(?P<task_id>[0-9A-Za-z]{32})/', views.status, name="converter_status"),
 ]

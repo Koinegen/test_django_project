@@ -1,9 +1,18 @@
+
+function download(task_id) {
+    var button = document.getElementById("id_download");
+    button.href = "/converter/download/" + task_id + "/";
+    button.style.display = "";
+}
+
+
 function getStatus(task_id) {
     var status = 1;
     var status_bar = document.getElementById('id_progress');
     const i = setInterval(function (){
         if (status === 100) {
             clearInterval(i);
+            download(task_id)
         }
 
         $.ajax({
