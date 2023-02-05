@@ -65,8 +65,9 @@ const csrftoken = getCookie('csrftoken');
         xhr.onload = function () {
           if (xhr.status === 200) {
             statusDiv.innerHTML = 'Your upload is successful..';
-            window.history.replaceState({}, '', '/converter/uploads/' + xhr.response.task_id);
-            console.log(xhr.response.task_id)
+            window.history.replaceState({}, '', '/converter/uploads/' + xhr.response.task_id + '/');
+            console.log(xhr.response.task_id);
+            form.style.display = "none";
             getStatus(xhr.response.task_id);
           } else {
             statusDiv.innerHTML = 'An error occurred during the upload. Try again.';

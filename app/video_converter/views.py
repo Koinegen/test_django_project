@@ -13,9 +13,7 @@ def status(request, task_id):
         a = Video.objects.filter(job_id=task_id).first()
         if a:
             return JsonResponse({"status": a.complete, "progress": a.status})
-        else:
-            return JsonResponse({})
-    return JsonResponse({})
+    return HttpResponseGone()
 
 
 def page(request, task_id=None):
@@ -55,6 +53,7 @@ def model_form_upload(request):
         video_obj: Video = form.save(commit=False)
         job_id = create_video_task_id(video_obj.name)
         video_obj.job_id = job_id
+        video_obj.complete = 3
         video_obj.save()
         response = JsonResponse({"task_id": job_id})
         convert.apply_async(args=(job_id,))

@@ -27,6 +27,11 @@ function getStatus(task_id) {
                 status = result.progress;
                 status_bar.ariaValueNow = status;
                 status_bar.style.width = status + '%';
+            },
+            error: function () {
+                clearInterval(i);
+                alert("error")
+
             }
         });
     }, 500)
